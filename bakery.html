@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sweet Bloom Bakery — Menu</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #fff9fb;
+      --card: #fff;
+      --accent: #ffb4d6;
+      --accent-2: #ffdede;
+      --muted: #8a6372;
+      --dark: #32292f;
+      --radius: 14px;
+      --shadow: 0 8px 24px rgba(50,40,47,0.08);
+      --max-w: 1100px;
+      font-family: 'Quicksand', system-ui;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#fff9fb 0%, #fff6f8 100%);
+      color:var(--dark);
+      padding:32px 20px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-w);
+    }
+
+    /* ---------------- LOGIN ---------------- */
+    .hidden { display:none; }
+
+    #login-page{
+      text-align:center;
+      margin-top:100px;
+    }
+
+    .login-box{
+      display:flex;
+      flex-direction:column;
+      width:260px;
+      margin:auto;
+      gap:10px;
+    }
+
+    .login-box input{
+      padding:10px;
+      border-radius:8px;
+      border:1px solid #ccc;
+    }
+
+    #login-btn{
+      padding:10px;
+      cursor:pointer;
+      background:var(--accent);
+      border:0;
+      border-radius:8px;
+      font-weight:700;
+    }
+
+    #login-error{ color:red; margin-top:5px; }
+
+    /* ---------------- HEADER ---------------- */
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:25px;
+    }
+
+    .brand{
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+
+    .logo{
+      width:58px; height:58px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:flex; justify-content:center; align-items:center;
+      font-weight:700; color:white; font-size:20px;
+      font-family:'Montserrat';
+      box-shadow:0 6px 18px rgba(255,180,214,0.18);
+    }
+
+    .actions{ display:flex; align-items:center; gap:12px; }
+
+    .search{
+      padding:8px 12px;
+      display:flex; align-items:center;
+      background:white;
+      border-radius:12px;
+      border:1px solid #eee;
+    }
+
+    .search input{ border:0; outline:none; }
+
+    .cart{
+      padding:8px 12px;
+      border-radius:12px;
+      background:white;
+      border:1px solid #eee;
+    }
+
+    /* ---------------- HERO ---------------- */
+    .hero{
+      display:flex;
+      align-items:center;
+      gap:28px;
+      padding:20px;
+      border-radius:16px;
+      background:white;
+      box-shadow:var(--shadow);
+      margin-bottom:25px;
+    }
+
+    .hero-right img{
+      width:260px;
+      border-radius:12px;
+    }
+
+    .cta{ margin-top:12px; display:flex; gap:12px; }
+
+    .btn{ padding:10px 14px; border-radius:10px; border:0; cursor:pointer; }
+
+    .btn-primary{ background:var(--dark); color:white; }
+    .btn-ghost{ background:white; border:1px solid #ccc; }
+
+    /* ---------------- CATEGORIES ---------------- */
+    .categories{
+      display:flex;
+      gap:12px;
+      margin:20px 0;
+      flex-wrap:wrap;
+    }
+
+    .category{
+      padding:10px 14px;
+      border-radius:999px;
+      background:white;
+      border:1px solid #eee;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    .category.active{
+      background:var(--accent);
+      color:white;
+      box-shadow:0 8px 18px rgba(255,180,214,0.14);
+    }
+
+    /* ---------------- GRID ---------------- */
+    .menu-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .card{
+      display:none;
+      background:white;
+      padding:14px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+
+    .card img{
+      width:96px; height:96px;
+      object-fit:cover;
+      border-radius:12px;
+    }
+
+    .meta h3{ margin:0; }
+    .muted{ color:var(--muted); }
+
+    .price-row{
+      margin-top:8px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .qty-btn{
+      background:var(--accent-2);
+      padding:6px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:600;
+    }
+
+    @media(max-width:1024px){
+      .menu-grid{ grid-template-columns:repeat(2,1fr); }
+      .hero-right{ display:none; }
+    }
+
+    @media(max-width:768px){
+      body{ padding:18px; }
+      .header{ flex-direction:column; gap:12px; align-items:flex-start; }
+      .menu-grid{ grid-template-columns:1fr; }
+    }
+
+  </style>
+</head>
+
+
+<body>
+<div class="container">
+
+<!-- =============== LOGIN PAGE =============== -->
+<div id="login-page">
+  <h2>🍰 Cake Shop Login</h2>
+  <div class="login-box">
+    <input type="email" id="email" placeholder="Enter Email">
+    <input type="password" id="password" placeholder="Enter Password">
+    <button id="login-btn">Login</button>
+    <p id="login-error"></p>
+  </div>
+</div>
+
+
+<!-- =============== SHOP PAGE =============== -->
+<div id="shop-page" class="hidden">
+
+<header class="header">
+  <div class="brand">
+    <div class="logo">SB</div>
+    <div>
+      <h1>Sweet Bloom Bakery</h1>
+      <p class="muted">Freshly baked delights • Open daily</p>
+    </div>
+  </div>
+
+  <div class="actions">
+    <div class="search"><input type="search" placeholder="Search sweets..."></div>
+    <div class="cart">Cart • <strong>0</strong></div>
+  </div>
+</header>
+
+
+<section class="hero">
+  <div class="hero-left">
+    <h2>Welcome to Sweet Bloom</h2>
+    <p class="muted">Handmade with love daily. Choose from Cakes, Pastries, Bread, Cookies and Drinks.</p>
+    <div class="cta">
+      <button class="btn btn-primary">Order Online</button>
+      <button class="btn btn-ghost">View Specials</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1542838687-3be289f57c93?auto=format&fit=crop&w=600&q=60">
+  </div>
+</section>
+
+
+<nav class="categories">
+  <button class="category active" data-cat="cakes">Cakes</button>
+  <button class="category" data-cat="pastries">Pastries</button>
+  <button class="category" data-cat="bread">Bread</button>
+  <button class="category" data-cat="cookies">Cookies</button>
+  <button class="category" data-cat="drinks">Drinks</button>
+</nav>
+
+
+<section class="menu-grid">
+
+  <!-- Cakes -->
+  <article class="card" data-category="cakes">
+    <img src="OIP.webp">
+    <div class="meta"><h3>Classic Vanilla Cake</h3>
+    <p class="muted">Moist vanilla sponge with buttercream.</p>
+    <div class="price-row"><div class="price">$28</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+  <article class="card" data-category="cakes">
+    <img src="https://images.unsplash.com/photo-1521305916504-4a1121188589">
+    <div class="meta"><h3>Chocolate Truffle Cake</h3>
+    <p class="muted">Rich chocolate layers with ganache.</p>
+    <div class="price-row"><div class="price">$32</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+
+  <!-- Pastries -->
+  <article class="card" data-category="pastries">
+    <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19">
+    <div class="meta"><h3>Butter Croissant</h3>
+    <p class="muted">Flaky and buttery.</p>
+    <div class="price-row"><div class="price">$5</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+  <article class="card" data-category="pastries">
+    <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b">
+    <div class="meta"><h3>Cinnamon Roll</h3>
+    <p class="muted">Soft roll with cinnamon glaze.</p>
+    <div class="price-row"><div class="price">$6</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+
+  <!-- Bread -->
+  <article class="card" data-category="bread">
+    <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e">
+    <div class="meta"><h3>Sourdough Bread</h3>
+    <p class="muted">Crusty artisan loaf.</p>
+    <div class="price-row"><div class="price">$10</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+  <article class="card" data-category="bread">
+    <img src="https://images.unsplash.com/photo-1542838687-3be289f57c93">
+    <div class="meta"><h3>French Baguette</h3>
+    <p class="muted">Crispy outside, soft inside.</p>
+    <div class="price-row"><div class="price">$8</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+
+  <!-- Cookies -->
+  <article class="card" data-category="cookies">
+    <img src="https://images.unsplash.com/photo-1607082349566-187ccb8243a2">
+    <div class="meta"><h3>Chocolate Chip Cookies</h3>
+    <p class="muted">Crispy + gooey inside.</p>
+    <div class="price-row"><div class="price">$7</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+  <article class="card" data-category="cookies">
+    <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b">
+    <div class="meta"><h3>Oatmeal Raisin Cookies</h3>
+    <p class="muted">Chewy with raisins.</p>
+    <div class="price-row"><div class="price">$6</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+
+  <!-- Drinks -->
+  <article class="card" data-category="drinks">
+    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93">
+    <div class="meta"><h3>Cappuccino</h3>
+    <p class="muted">Rich foam + coffee.</p>
+    <div class="price-row"><div class="price">$4</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+  <article class="card" data-category="drinks">
+    <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87">
+    <div class="meta"><h3>Strawberry Milkshake</h3>
+    <p class="muted">Fresh strawberries.</p>
+    <div class="price-row"><div class="price">$5</div><div class="qty-btn">Add</div></div></div>
+  </article>
+
+</section>
+</div> <!-- shop page end -->
+
+
+<script>
+// -------------------- LOGIN SYSTEM --------------------
+document.getElementById("login-btn").addEventListener("click", () => {
+  const email = document.getElementById("email").value.trim();
+  const pass = document.getElementById("password").value.trim();
+  const error = document.getElementById("login-error");
+
+  if(email==="demo@cake.com" && pass==="12345"){
+    document.getElementById("login-page").classList.add("hidden");
+    document.getElementById("shop-page").classList.remove("hidden");
+  } else {
+    error.textContent = "Invalid email or password!";
+  }
+});
+
+
+// -------------------- CATEGORY FILTER --------------------
+const btns = document.querySelectorAll(".category");
+const cards = document.querySelectorAll(".card");
+
+function filter(cat){
+  cards.forEach(c=>{
+    c.style.display = c.dataset.category===cat ? "flex" : "none";
+  });
+}
+
+btns.forEach(b=>{
+  b.addEventListener("click",()=>{
+    btns.forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    filter(b.dataset.cat);
+  });
+});
+
+// Default: show Cakes
+filter("cakes");
+</script>
+
+</div>
+</body>
+</html>
